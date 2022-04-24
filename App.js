@@ -1,20 +1,65 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import 'react-native-gesture-handler';
+import HomePage from "./components/Home/HomePage"
+import ArticleDetailsPage from "./components/Store/ArticleDetailsPage";
+import RoomSelectPage from "./components/Store/RoomSelectPage"
+import ReviewPage from './components/Review/ReviewPage';
+import ProfilPage from './components/Profil/profilpage';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer'
+
+const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+
+function Root(){
+  return(
+    <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen 
+          name="Hotels"
+          component={HomePage}
+        >
+        </Stack.Screen>
+
+        <Stack.Screen
+          name="Hotel Details"
+          component={ArticleDetailsPage}
+        >
+        </Stack.Screen>
+        <Stack.Screen
+          name='Choose Rooms'
+          component={RoomSelectPage}
+        >
+        </Stack.Screen>
+        <Stack.Screen
+          name='Overview'
+          component={ReviewPage}
+        >
+        </Stack.Screen>
+        <Stack.Screen
+          name='Your personal info'
+          component={ProfilPage}
+        >
+        </Stack.Screen>
+
+    </Stack.Navigator>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default class App extends React.Component{
+
+  render(){
+    return(
+        <NavigationContainer>
+          <Drawer.Navigator>
+            <Drawer.Screen name="Main" component={Root} options={{ headerShown: false }}></Drawer.Screen>
+
+          </Drawer.Navigator>
+        </NavigationContainer>
+      
+    )
+  }
+}
